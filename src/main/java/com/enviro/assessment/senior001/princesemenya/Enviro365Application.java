@@ -1,4 +1,4 @@
-package com.enviro.assessment.senior001.princesemenya.Enviro365;
+package com.enviro.assessment.senior001.princesemenya;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
