@@ -36,5 +36,53 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EmissionNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleEmissionNotFoundException(EmissionNotFoundException exception,
+                                                                            WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ResourceUsageNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleResourceUsageNotFoundException(ResourceUsageNotFoundException exception,
+                                                                                 WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SustainabilityInitiativeNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleSustainabilityInitiativeNotFoundException(SustainabilityInitiativeNotFoundException exception,
+                                                                                            WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RegulatoryComplianceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleRegulatoryComplianceNotFoundException(RegulatoryComplianceNotFoundException exception,
+                                                                                        WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
 }
 

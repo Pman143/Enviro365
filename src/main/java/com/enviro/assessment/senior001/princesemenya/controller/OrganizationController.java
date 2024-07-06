@@ -3,6 +3,8 @@ package com.enviro.assessment.senior001.princesemenya.controller;
 import com.enviro.assessment.senior001.princesemenya.dto.OrganizationDto;
 import com.enviro.assessment.senior001.princesemenya.dto.ResponseDto;
 import com.enviro.assessment.senior001.princesemenya.service.IOrganizationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/organization")
 @Slf4j
+@Tag(name = "Organization", description = "API for managing organizations")
 public class OrganizationController {
 
     private final IOrganizationService organizationService;
@@ -29,18 +32,21 @@ public class OrganizationController {
     }
 
     @GetMapping("/{organizationId}")
+    @Operation(summary = "Get an organization by its ID")
     public ResponseEntity<OrganizationDto> getOrganizationById(@PathVariable String organizationId) {
         log.info("getOrganizationById {}", organizationId);
         return ResponseEntity.ok(organizationService.getOrganizationById(organizationId));
     }
 
     @GetMapping
+    @Operation(summary = "Get all organizations")
     public ResponseEntity<List<OrganizationDto>> getOrganizations() {
         log.info("getOrganizations");
         return ResponseEntity.ok(organizationService.getAllOrganizations());
     }
 
     @PostMapping
+    @Operation(summary = "Create a new organization")
     public ResponseEntity<ResponseDto> createOrganization(@RequestBody OrganizationDto organizationDto) throws URISyntaxException {
         log.info("createOrganization {}", organizationDto);
         String organizationId = organizationService.saveOrganization(organizationDto);

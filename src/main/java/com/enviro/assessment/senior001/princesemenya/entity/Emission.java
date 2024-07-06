@@ -1,8 +1,8 @@
 package com.enviro.assessment.senior001.princesemenya.entity;
 
 
-import com.enviro.assessment.senior001.princesemenya.dto.EmissionType;
-import com.enviro.assessment.senior001.princesemenya.dto.EmmissionSource;
+import com.enviro.assessment.senior001.princesemenya.enums.EmissionType;
+import com.enviro.assessment.senior001.princesemenya.enums.EmmissionSource;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

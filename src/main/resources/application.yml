@@ -13,9 +13,14 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-#    show-sql: true
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        web: DEBUG
+    show-sql: true
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

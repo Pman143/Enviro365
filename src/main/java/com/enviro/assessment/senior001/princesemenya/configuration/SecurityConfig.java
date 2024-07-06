@@ -19,19 +19,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")).ignoringRequestMatchers(new AntPathRequestMatcher("/api/v1/organization/**")))
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/api/v1/**"))
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(
-                                "/api/v1/emissions/**",
-                                "/api/v1/organization/**",
-                                "/h2-console/**"
+                                "/api/v1/**",
+                                "/h2-console/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
                         )
                         .permitAll()
                         .anyRequest()
                         .authenticated()
-                ).headers(headers -> {
-                    headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin);
-                });
+                ).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }
 

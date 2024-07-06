@@ -1,4 +1,4 @@
-package com.enviro.assessment.senior001.princesemenya.dto;
+package com.enviro.assessment.senior001.princesemenya.enums;
 
 import lombok.Getter;
 

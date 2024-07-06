@@ -1,6 +1,6 @@
 package com.enviro.assessment.senior001.princesemenya.entity;
 
-import com.enviro.assessment.senior001.princesemenya.dto.ResourceType;
+import com.enviro.assessment.senior001.princesemenya.enums.ResourceType;
 import jakarta.persistence.*;
 import lombok.*;
 
