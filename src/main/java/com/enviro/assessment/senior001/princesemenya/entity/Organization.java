@@ -3,7 +3,6 @@ package com.enviro.assessment.senior001.princesemenya.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,9 +27,6 @@ public class Organization {
     private String industry;
 
     private String location;
-
-    @Column(columnDefinition = "TIMESTAMP")
-    private LocalDate establishedDate;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Emission> emissions = new ArrayList<>();

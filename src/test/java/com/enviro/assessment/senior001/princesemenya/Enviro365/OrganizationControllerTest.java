@@ -1,5 +1,6 @@
-package com.enviro.assessment.senior001.princesemenya.controller;
+package com.enviro.assessment.senior001.princesemenya.Enviro365;
 
+import com.enviro.assessment.senior001.princesemenya.controller.OrganizationController;
 import com.enviro.assessment.senior001.princesemenya.dto.OrganizationDto;
 import com.enviro.assessment.senior001.princesemenya.service.IOrganizationService;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 import static org.mockito.Mockito.when;
@@ -33,7 +33,7 @@ public class OrganizationControllerTest {
     @Test
     void testGetOrganizationById() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(organizationController).build();
-        OrganizationDto organizationDto = new OrganizationDto("1", "Test Organization", "Industry", "Location", LocalDateTime.now());
+        OrganizationDto organizationDto = new OrganizationDto("1", "Test Organization", "Industry", "Location");
 
         when(organizationService.getOrganizationById("1")).thenReturn(organizationDto);
 
@@ -46,7 +46,7 @@ public class OrganizationControllerTest {
     @Test
     void testGetAllOrganizations() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(organizationController).build();
-        OrganizationDto organizationDto = new OrganizationDto("1", "Test Organization", "Industry", "Location", LocalDateTime.now());
+        OrganizationDto organizationDto = new OrganizationDto("1", "Test Organization", "Industry", "Location");
 
         when(organizationService.getAllOrganizations()).thenReturn(Collections.singletonList(organizationDto));
 
