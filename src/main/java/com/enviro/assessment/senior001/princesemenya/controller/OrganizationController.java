@@ -8,7 +8,6 @@ import com.enviro.assessment.senior001.princesemenya.service.OpenApiService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,8 +60,9 @@ public class OrganizationController {
     }
 
     @GetMapping("/{externalId}/suggestions")
+    @Operation(summary = "This service is used to get a list of suggesting in which an organization can make informed decisions and drive positive environmental outcomes")
     public ResponseEntity<SuggestionDto> getSuggestions(@PathVariable String externalId) {
-        OrganizationDto organizationDTO = organizationService.getAllOrganizations().get(0);
+        OrganizationDto organizationDTO = organizationService.getOrganizationById(externalId);
         if (organizationDTO != null) {
             List<String> suggestions = openAIService.getSuggestions(organizationDTO.name(), organizationDTO.industry());
             return new ResponseEntity<>(new SuggestionDto(externalId, suggestions), HttpStatus.OK);
