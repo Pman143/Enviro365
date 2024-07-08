@@ -1,16 +1,18 @@
 package com.enviro.assessment.senior001.princesemenya.service;
 
+import com.enviro.assessment.senior001.princesemenya.entity.Role;
 import com.enviro.assessment.senior001.princesemenya.entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import org.springframework.security.core.GrantedAuthority;
+
 
 @Getter
 @Setter
@@ -18,44 +20,31 @@ public class UserDetailsImpl implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private final User user;
 
-    private String username;
-
-    private String email;
-
-    @JsonIgnore
-    private String password;
-
-    public UserDetailsImpl(String id, String username, String email, String password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
+    public UserDetailsImpl(User user) {
+        this.user = user;
     }
 
     public static UserDetailsImpl build(User user) {
-
-        return new UserDetailsImpl(
-                user.getExternalId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword());
+        return new UserDetailsImpl(user);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return user.getRoles().stream().map(Role::getName)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getUsername();
     }
 
     @Override
@@ -85,6 +74,6 @@ public class UserDetailsImpl implements UserDetails {
         if (o == null || getClass() != o.getClass())
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
-        return Objects.equals(id, user.id);
+        return Objects.equals(this.user.getId(), user.user.getId());
     }
 }

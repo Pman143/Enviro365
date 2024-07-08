@@ -3,9 +3,7 @@ package com.enviro.assessment.senior001.princesemenya.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -28,15 +26,18 @@ public class Organization {
 
     private String location;
 
-    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Emission> emissions = new ArrayList<>();
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ResourceUsage> resourceUsages = new ArrayList<>();
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private Set<Emission> emissions = new HashSet<>();
 
-    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SustainabilityInitiative> sustainabilityInitiatives = new ArrayList<>();
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private Set<ResourceUsage> resourceUsages = new HashSet<>();
 
-    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RegulatoryCompliance> regulatoryCompliance = new ArrayList<>();
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private Set<SustainabilityInitiative> sustainabilityInitiatives = new HashSet<>();
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private Set<RegulatoryCompliance> regulatoryCompliance = new HashSet<>();
 }

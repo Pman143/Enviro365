@@ -5,6 +5,7 @@ import com.enviro.assessment.senior001.princesemenya.entity.Organization;
 import com.enviro.assessment.senior001.princesemenya.exceptions.OrganizationNotFoundException;
 import com.enviro.assessment.senior001.princesemenya.mapper.OrganizationMapper;
 import com.enviro.assessment.senior001.princesemenya.repository.OrganizationRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +38,13 @@ public class OrganizationServiceImpl implements IOrganizationService {
                     .orElseThrow(() -> new OrganizationNotFoundException("Organization not found with id " + id));
             return organizationMapper.toDto(organization);
         } catch (IllegalArgumentException e) {
-            throw new OrganizationNotFoundException("");
+            throw new OrganizationNotFoundException(e.getMessage());
         }
+    }
+
+    @Override
+    public Organization getOrganizationByExternalId(String id) {
+        return organizationRepository.findByExternalId(id).orElseThrow(() ->  new OrganizationNotFoundException("Organization not found with id " + id));
     }
 
     @Override
@@ -46,5 +52,9 @@ public class OrganizationServiceImpl implements IOrganizationService {
         Organization organization = organizationMapper.toEntity(organizationDto);
         organizationRepository.save(organization);
         return organization.getExternalId();
+    }
+
+    public boolean hasAccessToOrganization(String organizationId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userDetails.getUser().getOrganization().getExternalId().equals(organizationId);
     }
 }

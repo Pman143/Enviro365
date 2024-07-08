@@ -5,12 +5,15 @@ import com.enviro.assessment.senior001.princesemenya.dto.ResponseDto;
 import com.enviro.assessment.senior001.princesemenya.dto.SuggestionDto;
 import com.enviro.assessment.senior001.princesemenya.service.IOrganizationService;
 import com.enviro.assessment.senior001.princesemenya.service.OpenApiService;
+import com.enviro.assessment.senior001.princesemenya.service.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +41,9 @@ public class OrganizationController {
     }
 
     @GetMapping("/{organizationId}")
+    @PreAuthorize("@organizationServiceImpl.hasAccessToOrganization(#organizationId, #userDetails)")
     @Operation(summary = "Get an organization by its ID")
-    public ResponseEntity<OrganizationDto> getOrganizationById(@PathVariable String organizationId) {
+    public ResponseEntity<OrganizationDto> getOrganizationById(@PathVariable String organizationId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         log.info("getOrganizationById {}", organizationId);
         return ResponseEntity.ok(organizationService.getOrganizationById(organizationId));
     }

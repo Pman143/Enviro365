@@ -4,8 +4,10 @@ import com.enviro.assessment.senior001.princesemenya.dto.JwtResponse;
 import com.enviro.assessment.senior001.princesemenya.dto.LoginRequestDto;
 import com.enviro.assessment.senior001.princesemenya.dto.RegisterRequestDto;
 import com.enviro.assessment.senior001.princesemenya.dto.ResponseDto;
+import com.enviro.assessment.senior001.princesemenya.entity.Organization;
 import com.enviro.assessment.senior001.princesemenya.entity.User;
 import com.enviro.assessment.senior001.princesemenya.repository.UserRepository;
+import com.enviro.assessment.senior001.princesemenya.service.IOrganizationService;
 import com.enviro.assessment.senior001.princesemenya.service.UserDetailsImpl;
 import com.enviro.assessment.senior001.princesemenya.service.jwt.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 @RestController
@@ -33,6 +36,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final IOrganizationService organizationService;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder encoder;
 
@@ -46,7 +50,7 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUser().getExternalId(), userDetails.getUsername(), userDetails.getUser().getEmail()));
     }
 
     @PostMapping("/register")
@@ -57,10 +61,12 @@ public class AuthController {
                     .badRequest()
                     .body(new ResponseDto(String.valueOf(HttpStatus.BAD_REQUEST.value()), "Email already taken"));
         }
+        Organization organization = organizationService.getOrganizationByExternalId(registerRequestDto.organizationId());
         User user = new User(UUID.randomUUID(), UUID.randomUUID().toString(),
                 registerRequestDto.username(),
                 encoder.encode(registerRequestDto.password()),
-                registerRequestDto.email()
+                registerRequestDto.email(), organization,
+                new HashSet<>()
         );
         userRepository.save(user);
         return ResponseEntity

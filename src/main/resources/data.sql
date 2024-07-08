@@ -61,3 +61,7 @@ INSERT INTO Sustainability_Initiative (id, external_id, name, description, impac
 (random_uuid(), random_uuid(), 'Initiative H', 'Description H', 'Medium', (SELECT id FROM Organization WHERE name = 'Sustainable Agriculture')),
 (random_uuid(), random_uuid(), 'Initiative I', 'Description I', 'Low', (SELECT id FROM Organization WHERE name = 'Eco Tech Innovations')),
 (random_uuid(), random_uuid(), 'Initiative J', 'Description J', 'High', (SELECT id FROM Organization WHERE name = 'Green Building Solutions'));
+
+INSERT INTO roles (id, name) VALUES
+(random_uuid(), 'VIEWER'),
+(random_uuid(), 'ADMIN');
