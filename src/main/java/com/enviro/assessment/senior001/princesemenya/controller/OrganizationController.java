@@ -6,6 +6,7 @@ import com.enviro.assessment.senior001.princesemenya.dto.SuggestionDto;
 import com.enviro.assessment.senior001.princesemenya.service.IOrganizationService;
 import com.enviro.assessment.senior001.princesemenya.service.OpenApiService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import java.util.List;
 @RequestMapping("/api/v1/organization")
 @Slf4j
 @Tag(name = "Organization", description = "API for managing organizations")
+@SecurityRequirement(name = "bearerAuth")
 public class OrganizationController {
 
     private final IOrganizationService organizationService;

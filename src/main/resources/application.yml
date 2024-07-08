@@ -24,3 +24,16 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+security:
+  secret: jwtSecret=======================BezKoder=Spring===========================
+  expirationInMs: 86400000
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /secured-api:
+    get:
+      security:
+        - Authorization: []

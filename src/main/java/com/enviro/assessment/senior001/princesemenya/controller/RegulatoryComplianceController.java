@@ -4,6 +4,7 @@ import com.enviro.assessment.senior001.princesemenya.dto.RegulatoryComplianceDto
 import com.enviro.assessment.senior001.princesemenya.dto.ResponseDto;
 import com.enviro.assessment.senior001.princesemenya.service.IRegulatoryComplianceService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/v1/regulatory-compliances")
 @Slf4j
 @Tag(name = "Regulatory Compliance", description = "API for managing regulatory compliance")
+@SecurityRequirement(name = "bearerAuth")
 public class RegulatoryComplianceController {
 
     private final IRegulatoryComplianceService regulatoryComplianceService;

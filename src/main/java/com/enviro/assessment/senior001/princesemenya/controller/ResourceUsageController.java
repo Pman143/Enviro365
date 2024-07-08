@@ -4,6 +4,7 @@ import com.enviro.assessment.senior001.princesemenya.dto.ResourceUsageDto;
 import com.enviro.assessment.senior001.princesemenya.dto.ResponseDto;
 import com.enviro.assessment.senior001.princesemenya.service.IResourceUsageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/v1/resource-usages")
 @Slf4j
 @Tag(name = "Resource Usage", description = "API for managing resource usage")
+@SecurityRequirement(name = "bearerAuth")
 public class ResourceUsageController {
 
     private final IResourceUsageService resourceUsageService;
