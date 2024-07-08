@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
     }
 
     @ExceptionHandler(OrganizationNotFoundException.class)
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
     }
 
     @ExceptionHandler(EmissionNotFoundException.class)
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
     }
 
     @ExceptionHandler(ResourceUsageNotFoundException.class)
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
     }
 
     @ExceptionHandler(SustainabilityInitiativeNotFoundException.class)
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
     }
 
     @ExceptionHandler(RegulatoryComplianceNotFoundException.class)
@@ -82,7 +82,19 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 LocalDateTime.now()
         );
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
+    }
+
+    @ExceptionHandler(SuggestionsException.class)
+    public ResponseEntity<ErrorResponseDto> handleRegulatoryComplianceNotFoundException(SuggestionsException exception,
+                                                                                        WebRequest webRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDto, errorResponseDto.errorCode());
     }
 }
 

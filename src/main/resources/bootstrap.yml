@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: your-application-name
+  profiles:
+    active: default
+  config:
+    import: configserver:http://localhost:8888
